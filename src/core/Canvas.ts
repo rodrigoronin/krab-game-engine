@@ -23,6 +23,14 @@ function renderToDisplay() {
     Math.min(DISPLAY_WIDTH / GAME_WIDTH, DISPLAY_HEIGHT / GAME_HEIGHT)
   );
 
+  const scaledW = GAME_WIDTH * scale;
+  const scaledH = GAME_HEIGHT * scale;
+  let offsetX: number = 0;
+  let offsetY: number = 0;
+
+  if (scaledW < DISPLAY_WIDTH) offsetX = (DISPLAY_WIDTH - scaledW) / 2;
+  if (scaledH < DISPLAY_HEIGHT) offsetY = (DISPLAY_HEIGHT - scaledH) / 2;
+
   displayCtx.imageSmoothingEnabled = false;
 
   displayCtx.drawImage(
@@ -31,8 +39,8 @@ function renderToDisplay() {
     0,
     GAME_WIDTH,
     GAME_HEIGHT,
-    0,
-    0,
+    offsetX,
+    offsetY,
     GAME_WIDTH * scale,
     GAME_HEIGHT * scale
   );

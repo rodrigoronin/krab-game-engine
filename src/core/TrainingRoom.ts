@@ -1,8 +1,8 @@
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
-const CELL_SIZE: number = 64;
-const GRID_WIDTH: number = Math.ceil(CANVAS_WIDTH / CELL_SIZE);
-const GRID_HEIGHT: number = Math.ceil(CANVAS_HEIGHT / CELL_SIZE);
+import { GAME_WIDTH, GAME_HEIGHT } from "./Canvas";
+
+const CELL_SIZE: number = 32;
+const GRID_WIDTH: number = Math.ceil(GAME_WIDTH / CELL_SIZE);
+const GRID_HEIGHT: number = Math.ceil(GAME_HEIGHT / CELL_SIZE);
 
 // Renders a grid on the canvas for the training room background
 // Each cell is CELL_SIZE x CELL_SIZE pixels

@@ -1,4 +1,4 @@
-import { GAME_WIDTH, GAME_HEIGHT, gameCtx } from "./Canvas";
+import { GAME_WIDTH, GAME_HEIGHT, gameCtx, renderToDisplay } from "./Canvas";
 import { Player } from "../entities/Player";
 import { getDirections } from "../input/InputManager";
 import { renderGrid } from "../core/TrainingRoom";
@@ -7,7 +7,7 @@ let lastTime: number = 0;
 
 const player = new Player({
   position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2 },
-  size: { width: 32, height: 32 },
+  size: { width: 48, height: 48 },
   speed: 100,
   color: "green",
 });
@@ -45,6 +45,7 @@ function gameLoop(timestamp: number): void {
 
   update(deltaTime);
   render();
+  renderToDisplay();
 
   requestAnimationFrame(gameLoop);
 }

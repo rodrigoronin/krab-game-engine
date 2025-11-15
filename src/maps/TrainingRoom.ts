@@ -1,5 +1,9 @@
 import { GAME_WIDTH, GAME_HEIGHT } from "../core/Canvas";
 import { ICamera } from "../core/Camera";
+import { Prop } from "../entities/Prop";
+import { MAP_GRID } from "./TrainingRoomMap";
+
+export const props: Prop[] = [];
 
 const CELL_SIZE: number = 32;
 const GRID_WIDTH: number = Math.ceil(GAME_WIDTH / CELL_SIZE);

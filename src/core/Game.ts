@@ -2,7 +2,7 @@ import { GAME_WIDTH, GAME_HEIGHT, gameCtx, renderToDisplay } from "./Canvas";
 import { Camera } from "./Camera";
 import { Player } from "../entities/Player";
 import { getDirections } from "../input/InputManager";
-import { renderGrid } from "../maps/TrainingRoom";
+import { props, renderGrid } from "../maps/TrainingRoom";
 
 const camera = new Camera({
   position: {
@@ -38,6 +38,7 @@ function render(): void {
   gameCtx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
   renderGrid(gameCtx, camera);
+  props.forEach((p) => p.render(gameCtx, camera));
 
   gameCtx.fillStyle = player.color;
   gameCtx.fillRect(

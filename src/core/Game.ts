@@ -25,7 +25,7 @@ const player = new Player({
   color: "green",
 });
 
-function update(deltaTime: number): void {
+export function update(deltaTime: number): void {
   if (deltaTime > 0) {
     const dir = getDirections();
     player.update(deltaTime, dir);
@@ -60,7 +60,7 @@ function gameLoop(timestamp: number): void {
   update(deltaTime);
   camera.follow(player.position.x, player.position.y);
   camera.update();
-  render();
+  // render();
   renderToDisplay();
 
   requestAnimationFrame(gameLoop);

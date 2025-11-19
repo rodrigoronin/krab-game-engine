@@ -38,6 +38,9 @@ const input = new InputManager();
   const worldWidth = map.width;
   const worldHeight = map.height;
 
+  player.x = app.screen.width / 2;
+  player.y = app.screen.height / 2;
+
   world.addChild(map);
   world.addChild(player);
 
@@ -47,6 +50,7 @@ const input = new InputManager();
   // This is the render loop (I guess)
   app.ticker.add((ticker) => {
     updatePlayer(player, ticker.deltaTime);
+    updateCamera(world, player, map, app);
   });
 })();
 
@@ -107,4 +111,17 @@ async function loadMap() {
   const map: Sprite = new Sprite(frame);
 
   return map;
+}
+
+function updateCamera(world: Container, player: Sprite, map: Sprite, app: Application) {
+  // camera target position
+  const targetX = -player.x + app.screen.width / 2;
+  const targetY = -player.y + app.screen.height / 2;
+
+  // clamping to not show outside map
+  const clampX = Math.min(0, Math.max(app.screen.width - map.width * map.scale.x, targetX));
+  const clampY = Math.min(0, Math.max(app.screen.height - map.height * map.scale.y, targetY));
+
+  world.x = clampX;
+  world.y = clampY;
 }

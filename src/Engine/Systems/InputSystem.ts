@@ -1,14 +1,6 @@
+import { Point } from "pixi.js";
+
 type InputAction = "NORMAL_ATTACK" | "DASH" | "INTERACT";
-
-export class Vector2 {
-  public x: number = 0;
-  public y: number = 0;
-
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-}
 
 type ButtonStateMap = Record<string, boolean>;
 
@@ -17,11 +9,11 @@ export class InputSystem {
   private _buttons: ButtonStateMap = {};
   private _prevButtons: ButtonStateMap = {};
   private static _instance: InputSystem;
-  private _movement: Vector2 = { x: 0, y: 0 };
-  private _keyboardMovement: Vector2 = { x: 0, y: 0 };
-  private _gamepadMovement: Vector2 = { x: 0, y: 0 };
+  private _movement: Point = new Point(0, 0);
+  private _keyboardMovement: Point = new Point(0, 0);
+  private _gamepadMovement: Point = new Point(0, 0);
   private readonly DEAD_ZONE: number = 0.18;
-  private gamepadActive: boolean = false;
+  private _gamepadActive: boolean = false;
 
   private constructor() {
     this.setupKeyboard();
@@ -33,11 +25,11 @@ export class InputSystem {
   }
 
   private setupKeyboard() {
-    const map: Record<string, Vector2> = {
-      KeyW: new Vector2(0, -1),
-      KeyA: new Vector2(-1, 0),
-      KeyS: new Vector2(0, 1),
-      KeyD: new Vector2(1, 0),
+    const map: Record<string, Point> = {
+      KeyW: new Point(0, -1),
+      KeyA: new Point(-1, 0),
+      KeyS: new Point(0, 1),
+      KeyD: new Point(1, 0),
     };
 
     const keyToAction: Record<string, InputAction> = {
@@ -84,7 +76,7 @@ export class InputSystem {
   }
 
   private pollGamepad() {
-    this.gamepadActive = false;
+    this._gamepadActive = false;
 
     const pads = navigator.getGamepads();
     if (!pads) return;
@@ -110,14 +102,14 @@ export class InputSystem {
       if (magnitude < this.DEAD_ZONE) {
         rawX = rawY = 0;
       } else {
-        this.gamepadActive = true;
+        this._gamepadActive = true;
         rawX /= magnitude;
         rawY /= magnitude;
       }
 
       this._gamepadMovement.x = rawX;
       this._gamepadMovement.y = rawY;
-      if (this.gamepadActive) break;
+      if (this._gamepadActive) break;
     }
 
     // Using an XBOX ONE gamepad for buttons reference
@@ -130,7 +122,7 @@ export class InputSystem {
   private combineSources() {
     // Golden Rule: if the stick left the deadzone in this frame -> gamepad has priority
     // If it got back to center -> keyboard takes control immediately
-    if (this.gamepadActive) {
+    if (this._gamepadActive) {
       this._movement.x = this._gamepadMovement.x;
       this._movement.y = this._gamepadMovement.y;
     } else {
@@ -163,6 +155,6 @@ export class InputSystem {
   }
 
   public isGamepadActiveThisFrame() {
-    return this.gamepadActive;
+    return this._gamepadActive;
   }
 }

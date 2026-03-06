@@ -1,0 +1,25 @@
+{
+  "name": "krab-game-engine",
+  "private": true,
+  "version": "0.1.0",
+  "author": {
+    "name": "Rodrigo 'Krab' Lira",
+    "email": "liramailbox@gmail.com",
+    "url": "https://github.com/rodrigoronin"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "pixi.js": "^8.16.0"
+  }
+}
